@@ -1,0 +1,118 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000000;
+}
+.jugador {
+    display: inline-flex;
+    width: 100vh;
+    color: blanchedalmond;
+    font-size: 5vh;
+    justify-content: center;
+    column-gap: 25vh;
+    font-family: fantasy
+}
+
+#puntosCPU {
+    width: 30vw;
+    align-content: end;
+    word-spacing: 5vh;
+}
+
+#puntosJugador {
+    display: flex;
+    width: 30vw;
+    align-items: center;
+    justify-content: end;
+    column-gap: 5vh;
+}
+
+
+
+
+.resultado {
+    width: 100vh;
+    display: flex;
+    justify-content: space-around;
+    column-gap: 10vh;
+    padding-bottom: 5vh;
+}
+.resultado img {
+    height: 30vh;
+}
+
+#resultado_cpu {
+    transform: rotateY(180deg);
+}
+
+
+.opciones {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 5vh;
+    border-top: 2px solid grey;
+}
+.opciones img {
+    height: 10vh;
+}
+.opciones img:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+}
+
+.popup {
+    position: absolute;
+    display: flex;
+    z-index: 10;
+    width: 65vh;
+    height: 55vh;
+    background-color: rgba(212, 187, 127, 0.5);
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 5vh 5vh 5vh;
+    border: 2vh solid #bcb88f;
+    border-radius: 4vh;
+    visibility: hidden;
+    transform: scale(0.1);
+    transition: transform 1s;
+    font-size: 7vh;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.openPopup {
+    visibility: visible;
+    transform: scale(1);
+}
+
+.popup button {
+    width: 25vh;
+    height: 10vh;
+    font-size: 50%;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    background-color: crimson;
+}
+
+.inputNombre {
+    position: absolute;
+    visibility: hidden;
+    width: 35vh;
+    height: 5vh;
+    background-color: black;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: blanchedalmond;
+    font-size: 90%;
+    text-align: center;
+    border: #000000;
+}
+
+.showInputNombre {
+    visibility: visible;
+}
+
+.inputNombre:focus {
+    outline: none;
+}
