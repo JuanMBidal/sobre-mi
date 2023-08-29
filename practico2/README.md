@@ -1,41 +1,103 @@
-# Práctico número 2: Piedra, Papel o Tijera.
+# Práctico N2: Piedra, Papel o Tijera.
 
-## Explicación
+## Estructura básica HTML y estilos CSS.
 
-El juego consiste en seleccionar una de las tres jugadas disponibles para competir contra la computadora, que realizará una jugada al azar. El ganador de cada ronda sumará un punto. El primero en llegar a tres puntos ganará la partida.
+ `index.html` este es el archivo base de todo el proyecto.
 
-**¿Quién gana a quién?**
+ `style.css` archivo css para darle formato a la interfaz.
 
-* La tijera gana al papel porque le puede cortar.
-* La piedra gana a las tijeras porque las rompe.
-* El papel gana a la piedra porque la envuelve.
+## Obtención del nombre del jugador.
 
-La elección de las jugadas se realiza mediante el menú que se encuentra en la parte de abajo.
+```javascript 
+ function cambiarNombre() {
+    let inputNombre = document.getElementById("inputNombre");
+    inputNombre.classList.add("showInputNombre");
+    inputNombre.value = ''
+}
+```
+y
 
-Las jugadas serán mostradas en el centro de la pantalla con imágenes de manos.
+```javascript 
+ inputNombre.addEventListener("keypress", function(e) {
+    if (e.key === "Enter") {
+        if (inputNombre.value != '') {
+          inputNombre.classList.remove("showInputNombre");
+          return nombreJugador.innerText = inputNombre.value;
+        }
+        else {
+            alert("Campo vacío");
+        }
+    }
+}) 
+```
+La función `cambiarNombre()` despliega el input para cambiar el nombre cuando se hace clic en el nombre del jugador. el event listener guarda el nuevo valor del nombre presionando enter y valida que el campo de texto no esté vacío.
 
-En la parte superior se encuentran los nombres y los puntos de ambos jugadores.
+## Selección de la opción del jugador y del oponente (PC).
 
-Haciendo clic sobre el nombre del jugador (por default es Jugador) es posible cambiarlo a gusto.
+```javascript 
+ function juego(jugadaUsuario) {
 
-Al finalizar la partida se desplega un cartel con el resultado y un botón para comenzar una nueva.
+    let jugadaComputadora = elecciones[Math.floor(Math.random()*3)];
+    
+    if (puntosCPU === 3 || puntosJugador === 3) {    
+    }
 
-## Para el profesor.
+    else if (inputNombre.classList.contains("showInputNombre")) {
+        alert("Ingrese un nombre");
+    }
+    else {
+        determinarGanador(jugadaUsuario, jugadaComputadora);
+        displayCpu.src = jugadaComputadora + ".png";
+        displayJugador.src = jugadaUsuario + ".png";
+        mostrarPuntosJugador.innerHTML = puntosJugador;
+        mostrarPuntosCPU.innerHTML = puntosCPU + " PC";
+        if (puntosCPU===3 || puntosJugador===3) {
+            partidaFinalizada();
+        }
+    }
+}
+```
+Esta función captura la elección del usuario al presionar una de las imágenes, genera la jugada de la computadora y contiene una validación para que no se pueda realizar una jugada mientras se está cambiando el nombre del jugador. También muestra en la pantalla las jugadas correspondientes, actualiza los puntos y termina la partida en caso de que se llegue a tres puntos.
 
-### Proceso.
+------
 
-Me basé en el código javascript que hice para el práctico 4 del curso anterior.
+## Determinación del ganador.
 
-Primero hice las imágenes utilizando una página de pixel art. Luego ordené los elementos con flexbox y usé unidades de longitud relativa para intentar que se adapten a distintos tamaños de pantalla. También coloqué un cartel utilizando las propiedades visibility y transition para lograr que se despliegue con una animación al finalizar la partida. Con JavaScript capturé las elecciónes del jugador y las de la computadora. La explicación de las funciones está en el código js.
-Finalmente había olvidado la opción de poder cambiar el nombre del jugador. Coloqué un input desplegable al hacer clic sobre el nombre y usé el value para modificar el texto. Usé un método addEventListener en el input para permitir que se guarde el nuevo nombre presionando la tecla Enter, con una función que toma como parámetro el objeto e.Para terminar realicé validaciones para que el campo de nombre no esté vacío.
+```javascript 
+function determinarGanador(jugadaUsuario, jugadaComputadora) {
+    if ((jugadaComputadora==="piedra" && jugadaUsuario=="tijeras") || (jugadaComputadora==="tijeras" && jugadaUsuario==="papel") || (jugadaComputadora=="papel" && jugadaUsuario=="piedra")) {
+        return ++puntosCPU;
+    }
+    else if (jugadaComputadora === jugadaUsuario) {
+        
+    }
+    else {
+        return ++puntosJugador;
+    }
+}
+```
+Esta función compara las dos jugadas y determina el ganador sumando el punto al jugador correspondiente en caso de no haber empate.
 
-### Errores.
+------
 
-Los principales errores ocurrieron al darle el aspecto con css. Opté por intentar simplificar la interfaz para comprender mejor lo que estaba haciendo.
+## Anunciar al ganador y reiniciar el juego.
 
-Para agregar la opción de cambiar el nombre tuve que separarlo de la cantidad de puntos en dos elementos distintos. También tuve un error cuando agregé el addEventListener al input, ya que hice todo en una función, lo que provocó que la alerta se envíe más de una vez.
+```javascript 
+function partidaFinalizada() {
+    if (puntosJugador > puntosCPU) {
+        document.getElementById("resultadoPartida").innerHTML = "Victoria";
+        popup.classList.add("openPopup");
+    } else {
+        document.getElementById("resultadoPartida").innerHTML = "Derrota";
+        popup.classList.add("openPopup");
+    }
+}
+```
+Esta función despliega un cartel anunciando el resultado de la partida.
 
-### Pruebas.
+------
+
+## Pruebas.
 
 **Primer partida:**
 
@@ -64,4 +126,21 @@ Para agregar la opción de cambiar el nombre tuve que separarlo de la cantidad d
 **Campo de texto vacío y Enter: Alerta**
 
 **Campo de texto vacío y presionar una botón de jugada: Alerta**
+
+----
+
+## Errores.
+
+Los principales errores ocurrieron al darle el aspecto con css. Opté por intentar simplificar la interfaz para comprender mejor lo que estaba haciendo.
+
+Para agregar la opción de cambiar el nombre tuve que separarlo de la cantidad de puntos en dos elementos distintos. También tuve un error cuando agregé el addEventListener al input, ya que hice todo en una función, lo que provocó que la alerta se envíe más de una vez.
+
+-----
+
+## Enlaces.
+
+* https://www.pixilart.com/ (Página de pixel art con la que hice las imágenes)
+
+* https://www.w3schools.com
+
 
